@@ -1,25 +1,45 @@
-import logo from './logo.svg';
 import './App.css';
+import { Component } from 'react';
+import * as contentAction from './redux/actions/updateContent';
+import { connect } from 'react-redux';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+    constructor( props ) {
+        super( props );
+	    this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(e){
+        let content = e.target.value
+
+        this.props.updateContent( content );
+    }
+
+    render() {
+        return (
+            <div className="App">
+                <header className="App-header">
+                    <p>
+                        This is my yoastseo integration
+                    </p>
+                    <textarea id="content" name="content" rows="4" cols="50" onChange={this.handleChange}>{this.props.content}</textarea>
+                </header>
+            </div>
+        );
+    }
+
 }
 
-export default App;
+const mapStateToProps = (state, ownProps) => {
+    return {
+        content: state.content
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        updateContent: content => dispatch(contentAction.updateContent( content ))
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
