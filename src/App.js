@@ -1,9 +1,9 @@
 import './App.css';
-import { Component } from 'react';
+import React from 'react';
 import * as contentAction from './redux/actions/updateContent';
 import { connect } from 'react-redux';
 
-class App extends Component {
+class App extends React.Component {
     constructor( props ) {
         super( props );
 	    this.handleChange = this.handleChange.bind(this);
